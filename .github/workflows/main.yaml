@@ -36,8 +36,8 @@ jobs:
     second-job:
         needs: first-job
         strategy:
-         matrix:
-          version: ${{ needs.first-job.outputs.output1 }}
+         matrix: 
+            version: ${{ needs.first-job.outputs.output1 }}
         runs-on: ubuntu-latest
         steps:  
            - name: display output
