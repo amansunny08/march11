@@ -1,4 +1,4 @@
-with open('demo.txt', 'r') as f:
+with open('diff.txt', 'r') as f:
     soc=[]
     # d={}
     for i in f:
