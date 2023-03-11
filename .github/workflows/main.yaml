@@ -40,6 +40,9 @@ jobs:
             version: ${{ fromJSON(needs.first-job.outputs.output1) }}
         runs-on: ubuntu-latest
         steps:  
+           - name: checkout
+             uses: actions/checkout@v3
+             
            - name: display output
              run: cat ${{ matrix.version }} 
            
