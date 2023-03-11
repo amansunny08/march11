@@ -16,6 +16,16 @@ jobs:
           - name: last modified file
             id: new
             run: |
-               git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }}
+               git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt
               #  git diff --name-only --no-commit-id \
-              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}     
+              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}  
+
+          - name: run python script
+            id: bus
+            run: |
+              abc=$(python test.py)
+              echo "data=$abc" >> "$GITHUB_OUTPUT" 
+
+          - name: output result
+            run: |
+              echo "${{ steps.bus.outputs.data}}"       
