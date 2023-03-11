@@ -7,6 +7,8 @@ on:
 jobs:
     first-job:
        runs-on: ubuntu-latest
+       outputs:
+         output1: ${{ steps.bus.outputs.data}}
        steps:
           - name: checkout
             uses: actions/checkout@v3
@@ -29,3 +31,15 @@ jobs:
           - name: output result
             run: |
               echo "${{ steps.bus.outputs.data}}"       
+
+
+    second-job:
+        needs: first-job
+        strategy:
+         matrix:
+          version: ${{ needs.first-job.outputs.output1 }}
+        runs-on: ubuntu-latest
+        steps:  
+           - name: display output
+             run: echo ${{ matrix.version }} 
+           
