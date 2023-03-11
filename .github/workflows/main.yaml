@@ -37,7 +37,7 @@ jobs:
         needs: first-job
         strategy:
          matrix: 
-            version: ${{ needs.first-job.outputs.output1 }}
+            version: ${{ fromJSON(needs.first-job.outputs.output1) }}
         runs-on: ubuntu-latest
         steps:  
            - name: display output
