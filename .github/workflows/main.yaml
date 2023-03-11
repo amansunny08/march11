@@ -41,5 +41,5 @@ jobs:
         runs-on: ubuntu-latest
         steps:  
            - name: display output
-             run: echo ${{ matrix.version }} 
+             run: cat ${{ matrix.version }} 
            
