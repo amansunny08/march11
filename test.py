@@ -4,8 +4,8 @@ with open('diff.txt', 'r') as f:
     for i in f:
         if '.txt' in i:
              soc.append(i[:-1])
-    # print(soc)
-    print(','.join(soc))
+    print(soc)
+    # print(','.join(soc))
     # d['version'] = s
     # print(s)
     # print(d)
