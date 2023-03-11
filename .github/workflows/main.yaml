@@ -36,7 +36,7 @@ jobs:
     second-job:
         needs: first-job
         strategy:
-         max-parallel: 0
+         max-parallel: 1
          matrix: 
             version: ${{ fromJSON(needs.first-job.outputs.output1) }}
         runs-on: ubuntu-latest
