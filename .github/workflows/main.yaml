@@ -1,0 +1,20 @@
+name: test
+on: 
+   push:
+   pull_request:
+     branches:
+            - main
+jobs:
+    first-job:
+       runs-on: ubuntu-latest
+       steps:
+          - name: checkout
+            uses: actions/checkout@v3
+            with:
+               fetch-depth: 2
+
+          - name: last modified file
+            id: new
+            run: |
+               git diff --name-only --no-commit-id \
+               ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}     
