@@ -69,4 +69,12 @@ jobs:
 
            - name: display output
              run: cat ${{ matrix.version }} 
-           
+
+    Third-job:
+         needs: first-job
+         if: ${{ github.event_name == 'workflow_dispatch'}}
+         runs-on: ubuntu-latest
+         steps:
+             - name: command
+               run: echo "hello world"
+
