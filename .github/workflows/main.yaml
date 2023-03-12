@@ -15,6 +15,15 @@ jobs:
             with:
                fetch-depth: 2
 
+               
+
+          - name: last modified file
+            id: new
+            run: |
+               git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt
+              #  git diff --name-only --no-commit-id \
+              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}  
+
           - name: chekout common repo 
             run: git clone "https://github.com/amansunny08/march12-common.git"  my-tools
             # uses: actions/checkout@v3
@@ -25,37 +34,31 @@ jobs:
           - name: list files
             run: |
                cd my-tools
-               ls -lrt     
+               ls -lrt    
 
-          # - name: last modified file
-          #   id: new
-          #   run: |
-          #      git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt
-              #  git diff --name-only --no-commit-id \
-              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}  
+          - name: run python script
+            id: bus
+            run: |
+              cd my-tools
+              abc=$(python test.py)
+              echo "data=$abc" >> "$GITHUB_OUTPUT" 
 
-          # - name: run python script
-          #   id: bus
-          #   run: |
-          #     abc=$(python test.py)
-          #     echo "data=$abc" >> "$GITHUB_OUTPUT" 
-
-          # - name: output result
-          #   run: |
-          #     echo "${{ steps.bus.outputs.data}}"       
+          - name: output result
+            run: |
+              echo "${{ steps.bus.outputs.data}}"       
 
 
-    # second-job:
-    #     needs: first-job
-    #     strategy:
-    #      max-parallel: 1
-    #      matrix: 
-    #         version: ${{ fromJSON(needs.first-job.outputs.output1) }}
-    #     runs-on: ubuntu-latest
-    #     steps:  
-    #        - name: checkout
-    #          uses: actions/checkout@v3
+    second-job:
+        needs: first-job
+        strategy:
+         max-parallel: 1
+         matrix: 
+            version: ${{ fromJSON(needs.first-job.outputs.output1) }}
+        runs-on: ubuntu-latest
+        steps:  
+           - name: checkout
+             uses: actions/checkout@v3
 
-    #        - name: display output
-    #          run: cat ${{ matrix.version }} 
+           - name: display output
+             run: cat ${{ matrix.version }} 
            
