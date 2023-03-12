@@ -1,9 +1,12 @@
 name: test
 on: 
-   push:
+  #  push:
+   workflow_dispatch:     
    pull_request:
      branches:
             - main
+     types:
+        - closed       
 jobs:
     first-job:
        runs-on: ubuntu-latest
@@ -22,9 +25,10 @@ jobs:
             run: |
                pwd
                ls -lrt
-               git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt
+               ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} >> diff.txt
+              #  git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt
               #  git diff --name-only --no-commit-id \
-              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} 
+               
                 
 
           - name: chekout common repo 
