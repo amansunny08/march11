@@ -42,8 +42,8 @@ jobs:
           - name: run python script
             id: bus
             run: |
-              cd my-tools
-              abc=$(python test.py)
+              
+              abc=my-tools/$(python test.py)
               echo "data=$abc" >> "$GITHUB_OUTPUT" 
 
           - name: output result
