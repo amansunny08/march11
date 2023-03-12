@@ -28,7 +28,7 @@ jobs:
                 
 
           - name: chekout common repo 
-            run: git clone "https://github.com/amansunny08/march12-common.git"  my-tools
+            run: git clone "https://github.com/amansunny08/march12-common.git" 
             # uses: actions/checkout@v3
             # with:
             #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
