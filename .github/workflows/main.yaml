@@ -43,7 +43,7 @@ jobs:
             id: bus
             run: |
               
-              abc=my-tools/$(python test.py)
+              abc=$(python test.py)
               echo "data=$abc" >> "$GITHUB_OUTPUT" 
 
           - name: output result
