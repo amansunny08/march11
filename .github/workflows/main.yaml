@@ -36,7 +36,7 @@ jobs:
 
           - name: list files
             run: |
-               cd my-tools
+              #  cd my-tools
                ls -lrt    
 
           - name: run python script
