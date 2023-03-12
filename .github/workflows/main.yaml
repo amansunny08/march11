@@ -18,7 +18,7 @@ jobs:
           - name: chekout common repo 
             uses: actions/checkout@v3
             with:
-               repository: https://github.com/amansunny08/march12-common.git
+               repository: amansunny08/https://github.com/amansunny08/march12-common.git
                path: my-tools     
 
           - name: list files
