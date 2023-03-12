@@ -16,10 +16,11 @@ jobs:
                fetch-depth: 2
 
           - name: chekout common repo 
-            uses: actions/checkout@v3
-            with:
-               repository: amansunny08/https://github.com/amansunny08/march12-common.git
-               path: my-tools     
+            run: git clone "https://github.com/amansunny08/march12-common.git"  my-tools
+            # uses: actions/checkout@v3
+            # with:
+            #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
+            #    path: my-tools     
 
           - name: list files
             run: |
