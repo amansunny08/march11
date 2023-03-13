@@ -43,9 +43,9 @@ jobs:
           - name: checkout new repo 
             uses: actions/checkout@v3
             with: 
-               repository: https://github.com/amansunny08/march13-test.git
+               repository: amansunny08/march13-test.git
                path: /vcp
-               
+
           - name: list files
             run: |
               #  cd my-tools
