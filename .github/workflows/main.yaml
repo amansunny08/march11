@@ -33,28 +33,23 @@ jobs:
                
                 
 
-          # - name: chekout common repo 
-          #   run: git clone "https://github.com/amansunny08/march13-test.git/test" 
+          - name: chekout common repo 
+            run: git clone "https://${{ secrets.HELLO }}@github.com/amansunny08/march13-test.git -b test" 
           #   # uses: actions/checkout@v3
           #   # with:
           #   #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
           #   #    path: my-tools     
 
-          - name: checkout new repo 
-            uses: actions/checkout@v3
-            with: 
-               repository: amansunny08/march13-test.git
-               ref: test
-               path: vcp
-               ssh-key: ${{ secrets.HELLO}}
+          # - name: checkout new repo 
+          #   uses: actions/checkout@v3
+          #   with: 
+          #      repository: amansunny08/march13-test.git
+          #      ref: test
+          #      path: vcp
+          #      ssh-key: ${{ secrets.HELLO}}
           - name: list files
             run: |
-              #  cd my-tools
-               ls -lrt    
-               cd vcp
-               ls -lrt
-               cd alpha
-               ls -lrt
+              ls -lrt
 
           - name: run python script
             id: bus
