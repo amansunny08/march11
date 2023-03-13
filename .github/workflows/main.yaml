@@ -53,6 +53,8 @@ jobs:
                ls -lrt    
                cd vcp
                ls -lrt
+               cd alpha
+               ls -lrt
 
           - name: run python script
             id: bus
