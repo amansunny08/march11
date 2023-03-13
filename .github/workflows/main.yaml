@@ -59,7 +59,7 @@ jobs:
 
     second-job:
         needs: first-job
-        if: ${{ github.event_name == 'pull_request'}}
+        # if: ${{ github.event_name == 'pull_request'}}
         strategy:
          max-parallel: 1
          matrix: 
@@ -74,7 +74,7 @@ jobs:
 
     Third-job:
          needs: first-job
-         if: ${{ github.event_name == 'workflow_dispatch'}}
+        #  if: ${{ github.event_name == 'workflow_dispatch'}}
          runs-on: ubuntu-latest
          steps:
              - name: command
