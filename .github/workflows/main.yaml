@@ -51,6 +51,8 @@ jobs:
             run: |
               #  cd my-tools
                ls -lrt    
+               cd vcp
+               ls -lrt
 
           - name: run python script
             id: bus
@@ -66,7 +68,7 @@ jobs:
 
     second-job:
         needs: first-job
-        # if: ${{ github.event_name == 'pull_request'}}
+        if: ${{ github.event_name == 'pull_request'}}
         strategy:
          max-parallel: 1
          matrix: 
