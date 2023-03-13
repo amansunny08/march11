@@ -48,8 +48,8 @@ jobs:
           - name: run python script
             id: bus
             run: |
-              
-              abc=.github/workflows/$(python test.py)
+              cd .github/workflows
+              abc=$(python test.py)
               echo "data=$abc" >> "$GITHUB_OUTPUT" 
 
           - name: output result
