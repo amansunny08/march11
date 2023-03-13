@@ -50,6 +50,8 @@ jobs:
           - name: list files
             run: |
               ls -lrt
+              cd march13-test
+              ls -lrt
 
           - name: run python script
             id: bus
