@@ -33,13 +33,19 @@ jobs:
                
                 
 
-          - name: chekout common repo 
-            run: git clone "https://github.com/amansunny08/march13-test.git/test" 
-            # uses: actions/checkout@v3
-            # with:
-            #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
-            #    path: my-tools     
+          # - name: chekout common repo 
+          #   run: git clone "https://github.com/amansunny08/march13-test.git/test" 
+          #   # uses: actions/checkout@v3
+          #   # with:
+          #   #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
+          #   #    path: my-tools     
 
+          - name: checkout new repo 
+            uses: actions/checkout@v3
+            with: 
+               repository: https://github.com/amansunny08/march13-test.git
+               path: /vcp
+               
           - name: list files
             run: |
               #  cd my-tools
