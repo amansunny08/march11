@@ -52,6 +52,7 @@ jobs:
               ls -lrt
               cd march13-test
               ls -lrt
+              cat demo/test.py
 
           - name: run python script
             id: bus
