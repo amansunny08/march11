@@ -23,8 +23,8 @@ jobs:
         - name: last modified file
           id: new
           run: |
-              pwd
-              ls -lrt
+              # pwd
+              # ls -lrt
               git diff --name-only -- '*.txt' ${{ github.event.before }} ${{ github.sha }} >> diff.txt
               # git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt 
             #  git diff --name-only --no-commit-id \
