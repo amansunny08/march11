@@ -1,91 +1,92 @@
 name: test
 on: 
-   push:
-   workflow_dispatch:     
-   pull_request:
-     branches:
-            - main
-     types:
-        - closed       
+  push:
+  workflow_dispatch:     
+  pull_request:
+    branches:
+          - main
+    types:
+      - closed       
 jobs:
-    first-job:
-       runs-on: ubuntu-latest
-       outputs:
-         output1: ${{ steps.bus.outputs.data}}
-       steps:
+  first-job:
+      runs-on: ubuntu-latest
+      outputs:
+        output1: ${{ steps.bus.outputs.data}}
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+          with:
+              fetch-depth: 2
+
+              
+
+        - name: last modified file
+          id: new
+          run: |
+              pwd
+              ls -lrt
+              git diff --name-only -- '*.txt' ${{ github.event.before }} ${{ github.sha }} >> diff.txt
+              # git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt 
+            #  git diff --name-only --no-commit-id \
+            #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} >> diff.txt
+            
+            #  git diff --name-only --no-commit-id \
+              
+              
+
+        - name: chekout common repo 
+          run: git clone "https://${{ secrets.HELLO }}@github.com/amansunny08/march13-test.git" -b test 
+        #   # uses: actions/checkout@v3
+        #   # with:
+        #   #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
+        #   #    path: my-tools     
+
+        # - name: checkout new repo 
+        #   uses: actions/checkout@v3
+        #   with: 
+        #      repository: amansunny08/march13-test.git
+        #      ref: test
+        #      path: vcp
+        #      ssh-key: ${{ secrets.HELLO}}
+        - name: list files
+          run: |
+            ls -lrt
+            cd march13-test
+            ls -lrt
+            cat demo/test.py
+
+        - name: run python script
+          id: bus
+          run: |
+            
+            abc=$(python test.py)
+            echo "data=$abc" >> "$GITHUB_OUTPUT" 
+
+        - name: output result
+          run: |
+            echo "${{ steps.bus.outputs.data}}"       
+
+
+  second-job:
+      needs: first-job
+      if: ${{ github.event_name == 'pull_request'}}
+      strategy:
+        max-parallel: 1
+        matrix: 
+          version: ${{ fromJSON(needs.first-job.outputs.output1) }}
+      runs-on: ubuntu-latest
+      steps:  
           - name: checkout
             uses: actions/checkout@v3
-            with:
-               fetch-depth: 2
 
-               
+          - name: display output
+            run: cat ${{ matrix.version }} 
 
-          - name: last modified file
-            id: new
-            run: |
-               pwd
-               ls -lrt
-               git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} >> diff.txt 
-              #  git diff --name-only --no-commit-id \
-              #  ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} >> diff.txt
-              
-              #  git diff --name-only --no-commit-id \
-               
-                
-
-          - name: chekout common repo 
-            run: git clone "https://${{ secrets.HELLO }}@github.com/amansunny08/march13-test.git" -b test 
-          #   # uses: actions/checkout@v3
-          #   # with:
-          #   #    repository: amansunny08/https://github.com/amansunny08/march12-common.git
-          #   #    path: my-tools     
-
-          # - name: checkout new repo 
-          #   uses: actions/checkout@v3
-          #   with: 
-          #      repository: amansunny08/march13-test.git
-          #      ref: test
-          #      path: vcp
-          #      ssh-key: ${{ secrets.HELLO}}
-          - name: list files
-            run: |
-              ls -lrt
-              cd march13-test
-              ls -lrt
-              cat demo/test.py
-
-          - name: run python script
-            id: bus
-            run: |
-              
-              abc=$(python test.py)
-              echo "data=$abc" >> "$GITHUB_OUTPUT" 
-
-          - name: output result
-            run: |
-              echo "${{ steps.bus.outputs.data}}"       
-
-
-    second-job:
+  Third-job:
         needs: first-job
-        if: ${{ github.event_name == 'pull_request'}}
-        strategy:
-         max-parallel: 1
-         matrix: 
-            version: ${{ fromJSON(needs.first-job.outputs.output1) }}
+        if: ${{ github.event_name == 'workflow_dispatch'}}
         runs-on: ubuntu-latest
-        steps:  
-           - name: checkout
-             uses: actions/checkout@v3
-
-           - name: display output
-             run: cat ${{ matrix.version }} 
-
-    Third-job:
-         needs: first-job
-         if: ${{ github.event_name == 'workflow_dispatch'}}
-         runs-on: ubuntu-latest
-         steps:
-             - name: command
-               run: echo "hello world"
+        steps:
+            - name: command
+              run: echo "hello world"
 
